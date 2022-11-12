@@ -43,8 +43,13 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public void updateUser(User user) {
+        User userFromDB = getUserById(user.getId());
+        if (userFromDB.getPassword().equals(user.getPassword())){
+            userRepository.save(user);
+        } else {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
+        }
     }
     @Transactional(readOnly = true)
     @Override
