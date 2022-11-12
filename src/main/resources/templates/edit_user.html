@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<!--<html lang="ru">-->
+<head>
+<!--    <meta charset="UTF-8">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>New</title>
+</head>
+<body>
+<h1><center>New user details</center></h1>
+<form th:method="PUT" th:action="@{/admin/{id}/update(id=${user.getId()})}" th:object="${user}">
+
+
+    <table border="100" bordercolor="teal" align="center">
+        <tr><td>
+            <label for="id">ID</label>
+            <input type="text" th:value="${user.getId()}" id="id" readonly>
+        </td> </tr>
+        <tr><td>
+            <label for="name">Enter Name</label>
+            <input type="text" th:field="*{name}" id="name">
+        </td> </tr>
+        <tr><td>
+            <label for="surname">Enter Surname:</label>
+            <input type="text" th:field="*{surname}" id="surname">
+        </td> </tr>
+        <tr><td>
+            <label for="age">Enter Age:</label>
+            <input type="text" th:field="*{age}" id="age">
+        </td> </tr>
+        <tr><td>
+            <label for="username">Enter Username:</label>
+            <input type="text" th:field="*{username}" id="username">
+        </td> </tr>
+        <tr><td>
+            <label for="password">Enter Password:</label>
+            <input type="text" th:field="*{password}" id="password">
+        </td> </tr>
+        <tr><td>
+            <select multiple th:field="*{roles}" id="roles">
+                <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getRole()}">
+                </option>
+            </select>
+        </td> </tr>
+        <tr><td>
+            <input type="submit" value="Update">
+        </td> </tr>
+    </table>
+
+    <h3><center><a th:href="@{/logout}"><font onmouseover="style.backgroundColor='#98FB98'; style.cursor='hand'"
+                                              onMouseOut="style.backgroundColor='#FFDAB9';"
+                                              style="font-family:'Comic Sans MS';color:green;font-size:25px">Logout</font></a></center></h3>
+</form>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Users</title>
+</head>
+<body>
+
+<h1><center>Welcome To Managing Page </center></h1>
+
+
+<table border="100" bordercolor="teal" align="center">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Password(bCrypt)</th>
+        <th>Authorities</th>
+        <th>Age</th>
+        <th colspan="2">Options</th>
+    </tr>
+
+    <tr>
+    <tr th:each="user : ${users}">
+        <td th:utext="${user.getId()}"></td>
+        <td th:utext="${user.getName()}"></td>
+        <td th:utext="${user.getSurname()}"></td>
+        <td th:utext="${user.getPassword()}"></td>
+        <td th:utext="${user.getRoles()}"></td>
+        <td th:utext="${user.getAge()}"></td>
+    <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Edit</a></td>
+
+
+    <td><form th:method="DELETE" th:action="@{/admin/{id}/delete(id=${user.getId()})}">
+        <input type="submit" value="Delete">
+        </form></td>
+
+    <tr>
+    <td  colspan="8" align="center"><a th:href="@{/admin/new}"><strong>Add new user</strong></a></td>
+    </tr>
+
+    </table>
+
+    <h3><center><a th:href="@{/logout}"><font onmouseover="style.backgroundColor='#98FB98'; style.cursor='hand'"
+                                  onMouseOut="style.backgroundColor='#FFDAB9';"
+                                              style="font-family:'Comic Sans MS';color:green;font-size:25px">Logout</font></a></center></h3>
+
+</body>
+</html>
