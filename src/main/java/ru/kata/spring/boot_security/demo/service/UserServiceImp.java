@@ -43,18 +43,6 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public void updateUser(User user) {
-//        Optional<User> userById = userRepository.findById(id);
-//        if (userById.isPresent()) {
-//            User userFromRepo = userById.get();
-//            userFromRepo.setId(id);
-//            userFromRepo.setName(user.getName());
-//            userFromRepo.setSurname(user.getSurname());
-//            userFromRepo.setAge(user.getAge());
-//            userFromRepo.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-//            userRepository.save(userFromRepo);
-//        } else {
-//            throw new UsernameNotFoundException(String.format("User %s with %s not found", user, id));
-//        }
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.saveAndFlush(user);
     }
