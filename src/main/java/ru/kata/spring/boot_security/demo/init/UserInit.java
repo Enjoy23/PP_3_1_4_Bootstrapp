@@ -32,10 +32,5 @@ public class UserInit {
 
         userService.saveUser(admin);
         userService.saveUser(user);
-
-
-
-
-
     }
 }
