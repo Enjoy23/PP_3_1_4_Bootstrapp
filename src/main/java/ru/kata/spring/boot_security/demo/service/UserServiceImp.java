@@ -6,14 +6,27 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.model.P6Spy;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repository.P6SpyRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.requireNonNull;
+import static org.apache.commons.io.IOUtils.toByteArray;
 @Service
 public class UserServiceImp implements UserService {
     private UserRepository userRepository;
+    private P6SpyRepository p6SpyRepository;
+
+
+    public UserServiceImp(P6SpyRepository p6SpyRepository) {
+        this.p6SpyRepository = p6SpyRepository;
+    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -25,6 +38,14 @@ public class UserServiceImp implements UserService {
     public void saveUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.saveAndFlush(user);
+
+        try (InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("random-file.txt")) {
+            byte[] reportContent = toByteArray(requireNonNull(resourceAsStream));
+            P6Spy p6Spy = new P6Spy (reportContent);
+            p6SpyRepository.save(p6Spy);
+        } catch (IOException e) {
+            throw new RuntimeException (e);
+        }
     }
 
     @Transactional
